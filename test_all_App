@@ -1,0 +1,49 @@
+#include <iostream>
+#include "LED.h"
+#include "GPIO.h"
+#include "AnalogIn.h"
+
+/*
+ * This application uses the LED, GPIO, and AnalogIn classes to control GPIO pins.
+ * It performs the following tasks:
+ * a. Turns on user LEDs number 1 and 3.
+ * b. Flashes user LED 2.
+ * c. Reads the temperature sensor and displays its value.
+ * d. Reads the push button on P8.16.
+ * e. If the push button was pushed, it turns on the LED on P9.12.
+ *
+ * Example invocation:
+ * ./test_all_App
+ */
+
+int main() {
+    // Create LED objects for user LEDs 0 to 3
+    LED led1(1), led3(3), led2(2);
+    
+    // Turn on user LEDs 1 and 3
+    led1.on();
+    led3.on();
+    
+    // Flash user LED 2
+    led2.flash(3);  // Flash LED 2 for 3 cycles
+    
+    // Create AnalogIn object for reading temperature sensor (ADC)
+    AnalogIn tempSensor(0);
+    
+    // Read the temperature sensor
+    int tempValue = tempSensor.readAdcSample();
+    std::cout << "Temperature Sensor Value: " << tempValue << std::endl;
+    
+    // Create GPIO object for reading push button (P8.16)
+    GPIO pushButton(16, GPIO::IN); // Assuming P8.16 is mapped to GPIO 16
+    
+    // Read the push button
+    if (pushButton.read() == GPIO::HIGH) {
+        // If button is pressed, turn on LED on P9.12
+        GPIO ledP912(12, GPIO::OUT); // Assuming P9.12 is mapped to GPIO 12
+        ledP912.write(GPIO::HIGH);
+        std::cout << "Push button pressed. LED on P9.12 turned on." << std::endl;
+    }
+
+    return 0;
+}

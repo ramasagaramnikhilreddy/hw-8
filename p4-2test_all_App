@@ -1,0 +1,12 @@
+/*
+ * This application uses the LED, GPIO, and AnalogIn classes to control GPIO pins.
+ * It performs the following tasks:
+ * a. Turns on user LEDs number 1 and 3.
+ * b. Flashes user LED 2.
+ * c. Reads the temperature sensor and displays its value.
+ * d. Reads the push button on P8.16.
+ * e. If the push button was pushed, it turns on the LED on P9.12.
+ *
+ * Example invocation:
+ * ./test_all_App
+ */
